@@ -1,0 +1,212 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
+import 'package:tutor_app/Provider/user_provider.dart';
+import 'package:tutor_app/services/firbaseservice.dart';
+
+import '../../widget/task_student.dart';
+class AdminTask extends StatefulWidget {
+  const AdminTask({Key? key}) : super(key: key);
+
+  @override
+  State<AdminTask> createState() => _AdminTaskState();
+}
+
+class _AdminTaskState extends State<AdminTask> {
+  var taskController = TextEditingController();
+  FirebaseServices services =FirebaseServices();
+  @override
+  Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      drawerEnableOpenDragGesture: true,
+      backgroundColor: const Color(0xff3B6EE9),
+      body: ListView(
+        children: [
+          const Spacer(),
+          Padding(
+            padding:  EdgeInsets.only(left: 2.h),
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 4.h,),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(' Students',  style:  GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 30.sp,
+                                color:  Colors.white
+                            ),
+                          ),),
+                          Text(' Task',style:  GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 30.sp,
+                                color:  const Color(0xffE9CE0F)
+                            ),
+                          ),),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+                Padding(
+                  padding:  const EdgeInsets.only(top: 30.0,left:20),
+                  child: Image.asset('assets/images/6.png',height: 16.h,),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 69.h,
+            decoration:const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+                color: Colors.white
+            ),
+            child: FutureBuilder<QuerySnapshot>(
+                future: services.users
+                    .where('type',
+                    isEqualTo: 'student')
+                    .get(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Some things wrong');
+                  }
+                  if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ));
+                  }
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      itemCount: snapshot.data!.size,
+                      itemBuilder:
+                          (BuildContext context, int index) {
+                        var data = snapshot.data!.docs[index];
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 3.h, vertical: 1.h),
+                          child: Container(
+                            height: 10.h,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.circular(20),
+                                color: const Color(0xffD7DDEC)
+                                    .withOpacity(0.4)),
+                            child: Padding(
+                              padding:
+                              const EdgeInsets.symmetric(
+                                  horizontal: 8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 2.h,
+                                      ),
+                                      CachedNetworkImage(
+                                        imageBuilder: (context,imageProvider)=>CircleAvatar(
+                                          radius: 25,
+                                          backgroundImage: imageProvider,
+                                        ),
+                                        cacheManager: CacheManager(Config(
+                                            'customCacheKey',
+                                            stalePeriod: const Duration(days: 500)
+
+                                        )),
+                                        imageUrl: data['url'],
+
+                                      ),
+                                      SizedBox(
+                                        width: 3.h,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment
+                                            .start,
+                                        children: [
+                                          SizedBox(
+                                            height: 3.5.h,
+                                          ),
+                                          Text(
+                                            "${data['name']} ${data['secondName']}",
+                                            style: GoogleFonts
+                                                .lato(
+                                              textStyle: TextStyle(
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .w700,
+                                                  fontSize:
+                                                  14.sp,
+                                                  color: const Color(
+                                                      0xff305F72)),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 0.4.h,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  CircleAvatar(
+                                      radius: 3.h,
+                                      backgroundColor:
+                                      const Color(
+                                          0xff3B6EE9),
+                                      child: IconButton(
+                                          onPressed: () {
+                                            userProvider
+                                                .getStudentDetails(
+                                                data);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                    const StudentTask()));
+//
+                                          },
+                                          icon: const Icon(
+                                            CupertinoIcons
+                                                .arrow_right_circle,
+                                            color: Colors.white,
+                                          )))
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      });
+                }),
+          ),
+
+
+
+        ],
+      ),
+    );
+  }
+}
