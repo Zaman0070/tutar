@@ -34,7 +34,7 @@
     </queries>
 
    <application
-        android:label="tutor_app"
+        android:label="Talking2Allah"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

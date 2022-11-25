@@ -29,18 +29,28 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//  RemoteNotification? notification = message.notification;
+ // AndroidNotification? android = message.notification?.android;
   await Firebase.initializeApp();
-  // flutterLocalNotificationsPlugin.show(
-  //     message.data.hashCode,
+  // var initialzationSettingsAndroid =
+  // const AndroidInitializationSettings('@mipmap/ic_launcher');
+  // var initializationSettings =
+  // InitializationSettings(android: initialzationSettingsAndroid);
+  // AndroidNotification? android = message.notification?.android;
+  //
+  // flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  // flutterLocalNotificationsPlugin.show(message.data.hashCode,
   //     message.data['title'],
   //     message.data['body'],
   //     NotificationDetails(
   //       android: AndroidNotificationDetails(
   //         channel.id,
   //         channel.name,
-  //         channelDescription: channel.description,
+  //         //  channel.description,
+  //         icon: android!.smallIcon,
   //       ),
-  //     ));
+  //     )
+  // );
 }
 
 void main() async {
