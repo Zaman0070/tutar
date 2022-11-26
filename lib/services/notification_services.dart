@@ -27,7 +27,6 @@ sendFCMNotification({String? title, String? body, String? token}) async{
       },
       body: jsonEncode(<String, dynamic>{
         'notification': <String, dynamic>{
-
           'title': title,
           'body': body,
         },

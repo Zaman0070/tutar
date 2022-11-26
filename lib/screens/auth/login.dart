@@ -173,18 +173,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           onPressed: () {
             widget.index==0?
-            services.userLogin(emailTextController.text, passwordTextController.text, context,student!): ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content:
-              Text('This account has not been creates as student !'),
-              ),
-            );
+            services.userLogin(emailTextController.text, passwordTextController.text, context,student!): null;
 
             widget.index==1?
-            services.facultyLogin(emailTextController.text, passwordTextController.text, context,faculty!): ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content:
-              Text('This account has not been creates as faculty !'),
-              ),
-            );
+            services.facultyLogin(emailTextController.text, passwordTextController.text, context,faculty!): null;
             services.adminLogin(emailTextController.text, passwordTextController.text, context,admin!);
 
           },
@@ -347,12 +339,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(
                               height: 6.h,
                             ),
-                            InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (_)=>SignUp()));
-                              },
-                              child: Text('data'),
-                            )
+                            // InkWell(
+                            //   onTap: (){
+                            //     Navigator.push(context, MaterialPageRoute(builder: (_)=>SignUp()));
+                            //   },
+                            //   child: Text('data'),
+                            // )
                           ],
                         ),
                       ),

@@ -215,7 +215,7 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
                             ),
                           ),
 
-                          title: Text(groupList[index]['name']),
+                          title: Text(groupList[index]['name'],style: const TextStyle(fontWeight: FontWeight.bold),),
                          // subtitle:Text(lastMsg[index]['lastMsg'],style: TextStyle(fontWeight: lastMsg[index]['read']==false? FontWeight.bold:FontWeight.normal,color: Colors.green),),
                           subtitle:  FutureBuilder<DocumentSnapshot>(
                               future: _firestore.collection('groups').doc(groupList[index]['id']).get(),

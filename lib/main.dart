@@ -3,6 +3,7 @@ import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inapp_notifications/flutter_inapp_notifications.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 
 
 
-
+FirebaseMessaging messaging = FirebaseMessaging.instance;
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
 
@@ -37,6 +38,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // var initializationSettings =
   // InitializationSettings(android: initialzationSettingsAndroid);
   // AndroidNotification? android = message.notification?.android;
+  // RemoteNotification? notification = message.notification;
   //
   // flutterLocalNotificationsPlugin.initialize(initializationSettings);
   // flutterLocalNotificationsPlugin.show(message.data.hashCode,
@@ -59,7 +61,9 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
   ?.createNotificationChannel(channel);
-
+ SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+   statusBarColor: Colors.white
+ ));
   runApp(const MyApp());
 }
 
@@ -127,24 +131,7 @@ class _MyAppState extends State<MyApp> {
             ));
       }
     });
-    FirebaseMessaging.onBackgroundMessage((RemoteMessage message)async {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-      await  flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                //  channel.description,
-                icon: android.smallIcon,
-              ),
-            ));
-      }
-    });
+
     getToken();
     getTopics();
   }

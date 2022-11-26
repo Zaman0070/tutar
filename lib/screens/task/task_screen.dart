@@ -119,7 +119,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 ? FutureBuilder<QuerySnapshot>(
                     future: services.task
                         .doc(services.user!.uid)
-                        .collection('tasks')
+                        .collection('tasks').where('id',isEqualTo: services.user!.uid)
                         .get(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -140,7 +140,7 @@ class _TaskScreenState extends State<TaskScreen> {
                             itemCount: snapshot.data!.size,
                             itemBuilder: (BuildContext context, int index) {
                               var data = snapshot.data!.docs[index];
-                              return Column(
+                              return   Column(
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.symmetric(
@@ -165,7 +165,7 @@ class _TaskScreenState extends State<TaskScreen> {
                                               height: 5.h,
                                             ),
                                             SizedBox(
-                                              width: 3.h,
+                                              width: 2.h,
                                             ),
                                             Column(
                                               crossAxisAlignment:
@@ -173,12 +173,12 @@ class _TaskScreenState extends State<TaskScreen> {
                                               children: [
                                                 SizedBox(height: 2.h),
                                                 Text(
-                                                  'Prepare your task',
+                                                  'Task assigned by Instructor',
                                                   style: GoogleFonts.lato(
                                                     textStyle: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w700,
-                                                        fontSize: 14.sp,
+                                                        fontSize: 13.sp,
                                                         color: const Color(
                                                             0xff305F72)),
                                                   ),

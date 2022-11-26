@@ -3,13 +3,10 @@ const admin = require("firebase-admin");
 const { firestore, auth } = require("firebase-admin");
 const { user } = require("firebase-functions/v1/auth");
 const { event } = require("firebase-functions/v1/analytics");
-var serviceAccount = require("/Users/apple/StudioProjects/tutor_app/functions/sdk.json");
+//var serviceAccount = require("/Users/apple/StudioProjects/tutor_app/functions/sdk.json");
 
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://test-f312b-default-rtdb.firebaseio.com"
-});
+admin.initializeApp();
 
 
 const database = admin.firestore();
@@ -131,11 +128,11 @@ exports.announcement = functions.firestore.document('announcement/{announcementI
 
         const payload = {
             notification: {
-          title: 'Announcement',
+          title: 'Announcement 📢',
           body:  message,
       },
       data: {
-        title: 'Announcement',
+        title: 'Announcement 📢',
         body:  message,
       }
   };
@@ -177,12 +174,12 @@ exports.studentAttendeesAdmin = functions.firestore.document('attendees/{attende
 
         const payload = {
             notification: {
-          title: 'Attendees',
-          body:  `${data.name} Marked ${message}`,
+          title: `${data.name} entered the session at ${message}. ✅`,
+          body:  'Tap to join.',
       },
       data: {
-        title: 'Attendees',
-        body:  `${data.name} Marked ${message}`,
+       title: `${data.name} entered the session at ${message}. ✅`,
+       body:  'Tap to join.',
       }
   };
   admin.messaging().sendToDevice(tokenList, payload).then((response) =>{
@@ -223,12 +220,12 @@ exports.studentAttendeesFaculty = functions.firestore.document('attendees/{atten
 
         const payload = {
             notification: {
-          title: 'Attendees',
-          body:  `${data.name} Marked ${message}`,
+          title: `${data.name} just joined the session. ✅`,
+          body:  'Tap to Join.',
       },
       data: {
-        title: 'Attendees',
-        body:  `${data.name} Marked ${message}`,
+        title: `${data.name} just joined the session. ✅`,
+        body:  'Tap to Join.',
       }
   };
   admin.messaging().sendToDevice(tokenList, payload).then((response) =>{
@@ -268,12 +265,12 @@ exports.joinSession = functions.firestore.document('join/{joinId}').onCreate(
 
         const payload = {
             notification: {
-          title: 'Session',
-          body:  `${data.name} Start Your Session`,
+          title:  `The instructor just joined the session. ✅`,
+          body:  'Tap to join.',
       },
       data: {
-        title: 'Session',
-        body:  `${data.name} Start Your Session`,
+        title:  `The instructor just joined the session. ✅`,
+        body:  'Tap to join.',
       }
   };
   admin.messaging().sendToDevice(tokenList, payload).then((response) =>{
@@ -314,12 +311,12 @@ exports.pushNotificationTasks = functions.firestore.document('task/{taskId}/task
 
         const payload = {
             notification: {
-          title: 'Instructor Assign Your Task',
+          title: 'New Task Assigned 📝',
           body:  message,
       },
       data: {
-        title:  'Instructor Assign Your Task',
-        body:  message,
+         title: 'New Task Assigned 📝',
+         body:  message,
       }
   };
   admin.messaging().sendToDevice(tokenList, payload).then((response) =>{

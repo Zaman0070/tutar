@@ -27,7 +27,7 @@ class _SettingState extends State<Setting> {
     var data = userProvider.studentData;
     List<dynamic> attendees = data!['attendees'];
     linController.text = data['link'];
-    completeClassesController.text = data['completeClasses'];
+   // completeClassesController.text = data['completeClasses'];
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -170,7 +170,7 @@ class _SettingState extends State<Setting> {
                             Icons.class_outlined,
                             color: Color(0xff27C1F9),
                           ),
-                          hintText: data['completeClasses'],
+                          hintText: data['completeClasses'].toString(),
                           //  hintStyle: kHintTextStyle,
                         ),
                       ),

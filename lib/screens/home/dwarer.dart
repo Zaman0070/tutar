@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:sizer/sizer.dart';
@@ -97,7 +98,7 @@ class _HomeDraweState extends State<HomeDrawe> {
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_)=>const Feedbacks()));
                   },
-                  leading:Image.asset('assets/logo/feedback.png',height: 3.5.h,color: Colors.grey[200]),
+                  leading: Icon(Icons.feedback_outlined,size: 3.3.h,color: Color(0xffb6c7ef),),
                   title: Text('Feedback',style: TextStyle(color: Colors.grey[200]),),
                 ),
 
@@ -117,11 +118,20 @@ class _HomeDraweState extends State<HomeDrawe> {
                     fontSize: 12,
                     color: Colors.white54,
                   ),
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 16.0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 50.0),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 20.0,
+                      ),
+                      child: Row(
+                        children: [
+                          Image.asset('assets/globe.png',height: 15,color: Color(0xffb6c7ef),),
+                          SizedBox(width: 1.w,),
+                          const Text('Talking2Allah.com'),
+                        ],
+                      ),
                     ),
-                    child: const Text('Talking2Allah.com'),
                   ),
                 ),
               ],

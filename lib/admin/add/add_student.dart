@@ -85,7 +85,7 @@ class _LoginScreenState extends State<AddStudent> {
 
             validator: (value){
               if(value == null || value.isEmpty){
-                return 'Enter your Second Name';
+                return 'Enter your Last Name';
               }
               return null;
             },
@@ -103,7 +103,7 @@ class _LoginScreenState extends State<AddStudent> {
                 size: 20,
                 color: Color(0xff376AED),
               ),
-              hintText: 'Enter Student Second Name ',
+              hintText: 'Enter Student Last Name ',
               //  hintStyle: kHintTextStyle,
             ),
           ),
@@ -276,7 +276,7 @@ class _LoginScreenState extends State<AddStudent> {
                           height: 3.h,
                         ),
                         Text(
-                          'Admin Create Student Account',
+                          'Create Student Account',
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                                 fontSize: 15.sp,

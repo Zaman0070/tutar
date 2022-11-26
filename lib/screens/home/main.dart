@@ -69,7 +69,7 @@ class _MainScreenState extends State<MainScreen> {
                 label: "Task",
               ),
               BottomNavigationBarItem(
-                icon:  Image.asset('assets/icons/chat.png',height: 3.h,color: currentIndex == 2 ? const Color(0xff376AED) : const Color(0xff7B8BB2)),
+                icon:  Image.asset('assets/chatt.png',height: 3.h,color: currentIndex == 2 ? const Color(0xff376AED) : const Color(0xff7B8BB2)),
                 label: "Chat",
               ),
               BottomNavigationBarItem(

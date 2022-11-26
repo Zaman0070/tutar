@@ -52,13 +52,13 @@ class _FeedbacksState extends State<Feedbacks> {
         )),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
+            Image.asset('assets/logo/a.png',height: 17.h,),
             Text(
                 textAlign: TextAlign.center,
-                'Your feedback & Seggestion are important to us',
+                'Your feedback & Suggestions are important to us! 😃',
                 style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                       fontWeight: FontWeight.w600,
@@ -95,8 +95,8 @@ class _FeedbacksState extends State<Feedbacks> {
               //   });
               // },
             ),
-            SizedBox(height: 4.h,),
-            Text('Care to Share more about it?',  style: GoogleFonts.poppins(
+            SizedBox(height: 3.5.h,),
+            Text('Tell us what can be improved?',  style: GoogleFonts.poppins(
               textStyle: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 12.sp,
@@ -145,7 +145,7 @@ class _FeedbacksState extends State<Feedbacks> {
                     borderRadius: BorderRadius.circular(6)),
                 child: Center(
                     child: Text(
-                      'Publish your feedback',
+                      'Submit',
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                             fontWeight: FontWeight.w600,

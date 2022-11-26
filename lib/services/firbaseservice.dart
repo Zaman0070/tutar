@@ -80,7 +80,7 @@ class FirebaseServices{
       if(Uid.contains(userCredential.user!.uid)){
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content:
-          Text('Successfully login !'),
+          Text('Login Successful!'),
           ),
         );
         final tokenRef = users.doc(userCredential.user!.uid).collection('tokens').doc(fcmToken);
@@ -116,7 +116,7 @@ class FirebaseServices{
       if(Uid.contains(userCredential.user!.uid)){
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content:
-          Text('Successfully login !'),
+          Text('Login Successful!'),
           ),
         );
         final tokenRef = users.doc(userCredential.user!.uid).collection('tokens').doc(fcmToken);
@@ -171,7 +171,7 @@ class FirebaseServices{
           'date':[],
           'schedule':[
           ],
-          'type':'student',
+          'type':'Student',
         }).then((value) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content:
@@ -276,7 +276,7 @@ class FirebaseServices{
           'date':[],
           'students':[],
           'url':url,
-          'type':'faculty',
+          'type':'Faculty',
         }).then((value) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content:
@@ -315,7 +315,7 @@ class FirebaseServices{
       if(Uid.contains(userCredential.user!.uid)){
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content:
-          Text('Successfully login !'),
+          Text('Login Successful!'),
           ),
         );
         final tokenRef = users.doc(userCredential.user!.uid).collection('tokens').doc(fcmToken);

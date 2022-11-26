@@ -525,7 +525,7 @@ else{
         child: Column(
           children: [
             SizedBox(
-              height: size.height / 1.28,
+              height: size.height / 1.30,
               width: size.width,
               child: StreamBuilder<QuerySnapshot>(
                 stream: _firestore
@@ -725,7 +725,7 @@ else{
                             ),
                            Positioned(
                             bottom: 0,
-                            right: 0,
+                            right: 2,
                             child: StreamBuilder<DocumentSnapshot>(
                               stream: _firestore.collection('users').doc(chatMap['sendId']).snapshots(),
                                 builder: (context,snapshot){
@@ -733,8 +733,8 @@ else{
                                   return Container();
                                 }
                                var data = snapshot.data;
-                                    return data!['status']== "Offline" ?  const CircleAvatar(radius: 6,backgroundColor: Colors.grey,)
-                                        : CircleAvatar(radius: 6,backgroundColor: Colors.green.shade400,)
+                                    return data!['status']== "Offline" ?  const CircleAvatar(radius: 5,backgroundColor: Colors.grey,)
+                                        : CircleAvatar(radius: 5,backgroundColor: Colors.green.shade400,)
                                     ;
                                 }
                             ),
@@ -748,12 +748,33 @@ else{
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      chatMap['sendId'] != services.user!.uid
-                          ? Text(
-                              "${chatMap['sendBy']} ${chatMap['secondName']} (${chatMap['senderType']})",
-                              style:
-                                  const TextStyle(fontSize: 13, color: Colors.grey),
-                            )
+                      chatMap['sendId'] != services.user!.uid?
+                      RichText(
+                        text: TextSpan(
+                            text: chatMap['senderType']=='admin' ? "${chatMap['sendBy']}":"${chatMap['sendBy']} ${chatMap['secondName']} ",
+                            style: GoogleFonts.poppins(
+                              textStyle: const TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey),
+                            ),
+                            children: [
+                              TextSpan(
+                                text:chatMap['senderType']=='admin' ? "(Mod)": "(${chatMap['senderType']})",
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 11,
+                                      color:chatMap['senderType']=='admin' ? Colors.red.shade800:chatMap['senderType']=='faculty' ?Colors.yellow.shade900:Colors.blue.shade800),
+                                ),
+                              )
+                            ]),
+                      )
+                      //     ? Text(chatMap['senderType']=='admin'?
+                      //         "${chatMap['sendBy']}(𝗠𝗼𝗱)":
+                      // "${chatMap['sendBy']}${chatMap['secondName']}(${chatMap['senderType']})",
+                      //         style:
+                      //             const TextStyle(fontSize: 13, color: Colors.grey),
+                      //       )
                           : Column(),
                       ChatBubble(
                         elevation: 0.5,
@@ -854,29 +875,158 @@ else{
                         )));
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-            child: ChatBubble(
-              alignment: chatMap['sendId'] == services.user!.uid
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
-              backGroundColor: chatMap['sendId'] == services.user!.uid
-                  ? const Color(0xff1C80F9)
-                  : Colors.white,
-              clipper: ChatBubbleClipper5(
-                  type: chatMap['sendId'] == services.user!.uid
-                      ? BubbleType.sendBubble
-                      : BubbleType.receiverBubble),
-              child: chatMap['message'] != ""
-                  ? Text(
-                      chatMap['name'],
-                      style: TextStyle(
-                          color: chatMap['sendId'] == services.user!.uid
-                              ? Colors.white
-                              : Colors.black),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: chatMap['sendId'] == services.user!.uid
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
+                  children: [
+                    chatMap['sendId'] != services.user!.uid
+                        ? Stack(
+                      children: [
+                        CachedNetworkImage(
+                          imageBuilder: (context, imageProvider) =>
+                              CircleAvatar(
+                                radius: 20,
+                                backgroundImage: imageProvider,
+                              ),
+                          cacheManager: CacheManager(Config('customCacheKey',
+                              stalePeriod: const Duration(days: 500))),
+                          imageUrl: chatMap['url'],
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 2,
+                          child: StreamBuilder<DocumentSnapshot>(
+                              stream: _firestore.collection('users').doc(chatMap['sendId']).snapshots(),
+                              builder: (context,snapshot){
+                                if(snapshot.data==null){
+                                  return Container();
+                                }
+                                var data = snapshot.data;
+                                return data!['status']== "Offline" ?  const CircleAvatar(radius: 5,backgroundColor: Colors.grey,)
+                                    : CircleAvatar(radius: 5,backgroundColor: Colors.green.shade400,)
+                                ;
+                              }
+                          ),
+                        )
+                      ],
                     )
-                  : const CircularProgressIndicator(),
+                        : Container(),
+                    SizedBox(
+                      width: 1.w,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        chatMap['sendId'] != services.user!.uid?
+                        RichText(
+                          text: TextSpan(
+                              text: chatMap['senderType']=='admin' ? "${chatMap['sendBy']}":"${chatMap['sendBy']} ${chatMap['secondName']} ",
+                              style: GoogleFonts.poppins(
+                                textStyle: const TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.grey),
+                              ),
+                              children: [
+                                TextSpan(
+                                  text:chatMap['senderType']=='admin' ? "(Mod)": "(${chatMap['senderType']})",
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 11,
+                                        color:chatMap['senderType']=='admin' ? Colors.red.shade900:chatMap['senderType']=='faculty' ?Colors.yellow:Colors.blue.shade800),
+                                  ),
+                                )
+                              ]),
+                        )
+                        //     ? Text(chatMap['senderType']=='admin'?
+                        //         "${chatMap['sendBy']}(𝗠𝗼𝗱)":
+                        // "${chatMap['sendBy']}${chatMap['secondName']}(${chatMap['senderType']})",
+                        //         style:
+                        //             const TextStyle(fontSize: 13, color: Colors.grey),
+                        //       )
+                            : Column(),
+                        ChatBubble(
+                          alignment: chatMap['sendId'] == services.user!.uid
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          backGroundColor: chatMap['sendId'] == services.user!.uid
+                              ? const Color(0xff1C80F9)
+                              : Colors.white,
+                          clipper: ChatBubbleClipper5(
+                              type: chatMap['sendId'] == services.user!.uid
+                                  ? BubbleType.sendBubble
+                                  : BubbleType.receiverBubble),
+                          child: chatMap['message'] != ""
+                              ? Row(
+                            mainAxisSize:MainAxisSize.min ,
+                            children: [
+                              Icon(Icons.file_copy_sharp,color: Colors.grey.shade400,),
+                              SizedBox(width: 1.w,),
+                              Text(
+                                chatMap['name'],
+                                style: TextStyle(
+                                    color: chatMap['sendId'] == services.user!.uid
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
+                            ],
+                          )
+                              : const CircularProgressIndicator(),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 0.5.h,
+                ),
+                Align(
+                  alignment: chatMap['sendId'] == services.user!.uid
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: Text(
+                    lastChatDate,
+                    style: const TextStyle(fontSize: 10),
+                  ),
+                ),
+              ],
             ),
           ),
+          // child: Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+          //   child: ChatBubble(
+          //     alignment: chatMap['sendId'] == services.user!.uid
+          //         ? Alignment.centerRight
+          //         : Alignment.centerLeft,
+          //     backGroundColor: chatMap['sendId'] == services.user!.uid
+          //         ? const Color(0xff1C80F9)
+          //         : Colors.white,
+          //     clipper: ChatBubbleClipper5(
+          //         type: chatMap['sendId'] == services.user!.uid
+          //             ? BubbleType.sendBubble
+          //             : BubbleType.receiverBubble),
+          //     child: chatMap['message'] != ""
+          //         ? Row(
+          //       mainAxisSize:MainAxisSize.min ,
+          //           children: [
+          //             Icon(Icons.file_copy_sharp,color: Colors.white,),
+          //             SizedBox(width: 1.w,),
+          //             Text(
+          //                 chatMap['name'],
+          //                 style: TextStyle(
+          //                     color: chatMap['sendId'] == services.user!.uid
+          //                         ? Colors.white
+          //                         : Colors.black),
+          //               ),
+          //           ],
+          //         )
+          //         : const CircularProgressIndicator(),
+          //   ),
+          // ),
         );
       } else if (chatMap['type'] == "notify") {
         return Container(

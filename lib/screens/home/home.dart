@@ -5,13 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_inapp_notifications/flutter_inapp_notifications.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tutor_app/screens/home/dwarer.dart';
 import 'package:tutor_app/services/firbaseservice.dart';
@@ -137,24 +134,22 @@ if(demand == 'demand') {
                       ));
                 }
                 return AlertDialog(
-                  title: Text(
-                      textAlign: TextAlign.center,
-                      'Your feedback & Seggestion are important to us',
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.sp,
-                            color: Colors.black),
-                      )),
+                  title: Column(
+                    children: [
+                      Image.asset('assets/logo/a.png',height: 15.h,),
+                      Text(
+                          textAlign: TextAlign.center,
+                          'Your feedback & Suggestions are important to us! 😃',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp,
+                                color: Colors.black),
+                          )),
+                    ],
+                  ),
                   content: ListView(shrinkWrap: true,
                     children: [
-                      Text('How did we do?',  style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12.sp,
-                            color: Colors.black),
-                      )),
-                      SizedBox(height: 1.h,),
                       RatingBar.builder(
                         initialRating: 0.5,
                         minRating: 1,
@@ -173,16 +168,16 @@ if(demand == 'demand') {
                           });
                         },
                       ),
-                      SizedBox(height: 4.h,),
-                      Text('Care to Share more about it?',  style: GoogleFonts.poppins(
+                      SizedBox(height: 2.h,),
+                      Text('Tell us what can be improved?',  style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 12.sp,
                             color: Colors.black),
                       )),
-                      SizedBox(height: 1.h,),
+                      SizedBox(height: 2.h,),
                       Container(
-                        height: 30.h,
+                        height: 22.h,
                         width: 100.w,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
@@ -221,7 +216,7 @@ if(demand == 'demand') {
                           borderRadius: BorderRadius.circular(6)),
                       child: Center(
                           child: Text(
-                            'Publish your feedback',
+                            'Submit',
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -258,12 +253,21 @@ if(demand == 'demand') {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 4.h,),
-              Image.asset('assets/icons/calendar.png',height: 12.h,),
+              SizedBox(height: 1.h,),
+              Container(
+                height: 5,
+                width: 40,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              ),
+              SizedBox(height: 3.h,),
+              Image.asset('assets/logo/b.png',height: 12.h,),
               SizedBox(height: 2.h,),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0,right: 8),
-                child: Text('Live Tracking',textAlign: TextAlign.center,  style: GoogleFonts.poppins(
+                child: Text('Cloud Attendance',textAlign: TextAlign.center,  style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 17.sp,
@@ -273,11 +277,11 @@ if(demand == 'demand') {
               SizedBox(height: 1.h,),
                Padding(
                 padding: const EdgeInsets.only(left: 15.0,right: 8),
-                child: Text('Amet minim mollit non deserunt ullamco est sit aliqua amet sint. Velit officia consequat mollit.',textAlign: TextAlign.center,  style: GoogleFonts.poppins(
+                child: Text(widget.index==0?'Please mark your attendance on time. The instructor would be 𝗮𝘂𝘁𝗼𝗺𝗮𝘁𝗶𝗰𝗮𝗹𝗹𝘆 𝗻𝗼𝘁𝗶𝗳𝗶𝗲𝗱 once the student entered the room.':"Please mark your attendance on time. The student would be 𝗮𝘂𝘁𝗼𝗺𝗮𝘁𝗶𝗰𝗮𝗹𝗹𝘆 𝗻𝗼𝘁𝗶𝗳𝗶𝗲𝗱 once the instructor entered the room.",textAlign: TextAlign.center,  style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 10.sp,
-                      color: Colors.black),
+                      color: Colors.grey[600]),
                 ),),
               ),
               ListView.builder(
@@ -370,7 +374,8 @@ if(demand == 'demand') {
                 /// for notification
              _firestore.collection('attendees').doc().set(
                     {
-                      'attendees': date,
+                      'attendees': DateFormat('hh:mm')
+                        .format(DateTime.fromMicrosecondsSinceEpoch(DateTime.now().microsecondsSinceEpoch)),
                       'adminId': Uidadmin,
                       'fId':fId,
                       'name':'$names $secondName'
@@ -431,7 +436,8 @@ if(demand == 'demand') {
               onTap: (){
               widget.index==1?  _firestore.collection('join').doc().set(
                     {
-                      'attendees':'${DateTime.now()}',
+                      'attendees': DateFormat('hh:mm')
+                          .format(DateTime.fromMicrosecondsSinceEpoch(DateTime.now().microsecondsSinceEpoch)),
                       'id': id,
                       'name':'$names $secondName'
                     }): null
@@ -562,7 +568,7 @@ if(demand == 'demand') {
                 height: 2.h,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                padding: const EdgeInsets.symmetric(horizontal: 26.0),
                 child: FutureBuilder<DocumentSnapshot>(
                     future: services.getUserData(),
                     builder: (BuildContext context,
@@ -584,7 +590,7 @@ if(demand == 'demand') {
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 23.sp,
+                                  fontSize: 22.sp,
                                   color: Colors.black),
                             ),
                             children: [
@@ -593,7 +599,7 @@ if(demand == 'demand') {
                                 style: GoogleFonts.poppins(
                                   textStyle: TextStyle(
                                       fontWeight: FontWeight.normal,
-                                      fontSize: 23.sp,
+                                      fontSize: 22.sp,
                                       color: Colors.black),
                                 ),
                               )
@@ -602,7 +608,7 @@ if(demand == 'demand') {
                     }),
               ),
               SizedBox(
-                height: 2.h,
+                height: 0.h,
               ),
               FutureBuilder<DocumentSnapshot>(
                   future: services.getUserData(),
@@ -634,7 +640,7 @@ if(demand == 'demand') {
 
 
               SizedBox(
-                height:widget.index==0? 3.h:3.h,
+                height:widget.index==0? 1.h:3.h,
               ),
               widget.index == 1
                   ?  Padding(
@@ -745,22 +751,27 @@ if(demand == 'demand') {
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Container(
-                    height: 5.5.h,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                        color: const Color(0xff3B6EE9),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Center(
-                        child: Text(
-                          'Join Class',
-                          style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 13.sp,
-                                color: Colors.white),
-                          ),
-                        )),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 5.5.h,
+                        width: 100.w,
+                        decoration: BoxDecoration(
+                            color: const Color(0xff3B6EE9),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text(
+                              'Join Class',
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13.sp,
+                                    color: Colors.white),
+                              ),
+                            )),
+                      ),
+                     // SizedBox(height: 2.5.h,),
+                    ],
                   ),
                 ),
               )
@@ -865,9 +876,9 @@ if(demand == 'demand') {
                       );
                     }),
               ),
-              SizedBox(
-                height: 2.5.h,
-              ),
+              // SizedBox(
+              //   height: 2.5.h,
+              // ),
               widget.index == 0
                   ?   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -892,7 +903,7 @@ if(demand == 'demand') {
                               (BuildContext context, int index) {
                             var data = snapshot.data!.docs[index];
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10.0,),
+                              padding: const EdgeInsets.only(left: 14.0,top: 20,right: 14),
                               child: Container(
                                 height: 11.h,
                                 width: 100.w,
@@ -950,7 +961,7 @@ if(demand == 'demand') {
 
               widget.index == 0
                   ?Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: FutureBuilder<QuerySnapshot>(
                     future: services.banner.get(),
                     builder: (BuildContext context,

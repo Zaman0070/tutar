@@ -111,7 +111,7 @@ class _ProfileState extends State<Profile> {
                             bottom:-14,
                             right:-12,
 
-                            child: IconButton(icon:const  Icon(Icons.add_a_photo_rounded,color: Colors.cyan,),onPressed: (){
+                            child: IconButton(icon:  Icon(Icons.add_a_photo_rounded,color: Colors.white.withOpacity(0.85),),onPressed: (){
                               bottomSheet();
                             },),
                           ),
@@ -363,7 +363,7 @@ class _ProfileState extends State<Profile> {
                                      RichText(
                                        text: TextSpan(
                                            text:"Joined ${name.replaceAll('0', '').replaceAll('1', '').replaceAll('2', '').replaceAll('3', '').replaceAll('4', '').replaceAll('5', '').replaceAll('6', '')
-                                           .replaceAll('7', '').replaceAll('8', '').replaceAll('9', '').replaceAll('-', '')} Session At ",
+                                           .replaceAll('7', '').replaceAll('8', '').replaceAll('9', '').replaceAll('-', '')}'s Session At ",
                                            style: GoogleFonts.poppins(
                                              textStyle: TextStyle(
                                                  fontWeight: FontWeight.w300,
@@ -552,9 +552,9 @@ class _ProfileState extends State<Profile> {
                             userProvider.getStudentDetails(snapshot.data);
                             Navigator.push(context, MaterialPageRoute(builder: (_)=>  SeeAttendees(index: widget.index!,)));
                           },
-                          child: Text('See More',  style: GoogleFonts.poppins(
+                          child: Text('See more',  style: GoogleFonts.poppins(
                             textStyle: TextStyle(
-                                fontSize: 14.sp, color: Colors.black),
+                                fontSize: 14.sp, color: Color(0xff343674),fontWeight: FontWeight.w600,),
                           ),),
                         );
                       }),
@@ -635,12 +635,12 @@ class _ProfileState extends State<Profile> {
                                     ),
                                   ),
                                   Text(
-                                    ' /',
+                                    ' / ',
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 22.sp,
-                                          color: Color(0xfff5f5f5)),
+                                          color: Color(0xffbdbdbd)),
                                     ),
                                   ),
                                   Text(
@@ -649,7 +649,7 @@ class _ProfileState extends State<Profile> {
                                       textStyle: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 22.sp,
-                                          color: const Color(0xfff5f5f5)),
+                                          color: const Color(0xffbdbdbd)),
                                     ),
                                   ),
                                 ],

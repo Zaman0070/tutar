@@ -96,7 +96,7 @@ class _AttendeesState extends State<Attendees> {
                                         fontSize: 13.sp,
                                       ),
                                     ),),
-                                    Text('See Attendees', style:  GoogleFonts.poppins(
+                                    Text('See Attendance', style:  GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 13.sp,

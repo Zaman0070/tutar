@@ -251,14 +251,14 @@ class _TakeFeedbackState extends State<TakeFeedback> {
                                             return   InkWell(
                                               onTap: () {
                                                 showDialog(
-                                                    useSafeArea: true,
+                                                    //useSafeArea: true,
                                                     context: context,
                                                     builder: (context) =>
                                                         AlertDialog(
                                                           actionsAlignment: MainAxisAlignment.start,
                                                           title: Text(
                                                               textAlign: TextAlign.center,
-                                                              '${snapshot.data!['name']}feedback',
+                                                              "${snapshot.data!['name']}'s feedback",
                                                               style: GoogleFonts.poppins(
                                                                 textStyle: TextStyle(
                                                                     fontWeight: FontWeight.w600,
@@ -285,18 +285,20 @@ class _TakeFeedbackState extends State<TakeFeedback> {
                                                                 },
                                                               ),
                                                               SizedBox(height: 1.h,),
-                                                              Text('feedback',   style: GoogleFonts.poppins(
+                                                              Text('Suggestion:',   style: GoogleFonts.poppins(
                                                                 textStyle: TextStyle(
                                                                     fontWeight: FontWeight.w600,
                                                                     fontSize: 13.sp,
                                                                     color: Colors.black),
                                                               )),
+                                                              SizedBox(height: 1.h,),
+                                                              Center(child: Text(snapshot.data!['text'],textAlign: TextAlign.center,softWrap: true,
+                                                              style: TextStyle(color: Colors.grey),
+                                                              ))
+
                                                             ],
                                                           ),
-                                                          actions: [
 
-                                                            Center(child: Text(snapshot.data!['text'],textAlign: TextAlign.center,softWrap: true,))
-                                                          ],
                                                         ),
 
                                                 );

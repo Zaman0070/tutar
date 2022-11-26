@@ -29,7 +29,7 @@ class _SeeAttendeesState extends State<SeeAttendees> {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
-        title: Text('Attendees',  style: GoogleFonts.poppins(
+        title: Text('Last 30 Days 🗓️',  style: GoogleFonts.poppins(
           textStyle: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.w600,
@@ -218,7 +218,7 @@ class _SeeAttendeesState extends State<SeeAttendees> {
                               RichText(
                                 text: TextSpan(
                                     text:"Joined ${name.replaceAll('0', '').replaceAll('1', '').replaceAll('2', '').replaceAll('3', '').replaceAll('4', '').replaceAll('5', '').replaceAll('6', '')
-                                        .replaceAll('7', '').replaceAll('8', '').replaceAll('9', '').replaceAll('-', '')} Session At ",
+                                        .replaceAll('7', '').replaceAll('8', '').replaceAll('9', '').replaceAll('-', '')}'s Session At ",
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                           fontWeight: FontWeight.w300,

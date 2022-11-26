@@ -24,7 +24,7 @@ class _AttendeesListState extends State<AttendeesList> {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
-        title: Text('Attendees list of ${data!['name']}',  style: GoogleFonts.poppins(
+        title: Text("${data!['name']}'s Attendance",  style: GoogleFonts.poppins(
           textStyle: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.w600,

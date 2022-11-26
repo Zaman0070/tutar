@@ -99,7 +99,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       startWeekDay: 1,
       headerStyle: GoogleFonts.poppins(
         textStyle: TextStyle(
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
             fontSize: 17.sp,
             color: Color(0xff3B6EE9)),
       ),
