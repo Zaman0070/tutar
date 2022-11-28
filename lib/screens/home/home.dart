@@ -262,21 +262,21 @@ if(demand == 'demand') {
                 borderRadius: BorderRadius.circular(10),
               ),
               ),
+              SizedBox(height: 5.h,),
+              Image.asset('assets/logo/b.png',height: 14.h,),
               SizedBox(height: 3.h,),
-              Image.asset('assets/logo/b.png',height: 12.h,),
-              SizedBox(height: 2.h,),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0,right: 8),
-                child: Text('Cloud Attendance',textAlign: TextAlign.center,  style: GoogleFonts.poppins(
+                child: Text('Cloud Attendance ☁️',textAlign: TextAlign.center,  style: GoogleFonts.poppins(
                   textStyle: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17.sp,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15.sp,
                       color: Colors.black),
                 ),),
               ),
               SizedBox(height: 1.h,),
                Padding(
-                padding: const EdgeInsets.only(left: 15.0,right: 8),
+                padding: const EdgeInsets.only(left: 18.0,right: 18),
                 child: Text(widget.index==0?'Please mark your attendance on time. The instructor would be 𝗮𝘂𝘁𝗼𝗺𝗮𝘁𝗶𝗰𝗮𝗹𝗹𝘆 𝗻𝗼𝘁𝗶𝗳𝗶𝗲𝗱 once the student entered the room.':"Please mark your attendance on time. The student would be 𝗮𝘂𝘁𝗼𝗺𝗮𝘁𝗶𝗰𝗮𝗹𝗹𝘆 𝗻𝗼𝘁𝗶𝗳𝗶𝗲𝗱 once the instructor entered the room.",textAlign: TextAlign.center,  style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                       fontWeight: FontWeight.w400,
@@ -351,7 +351,7 @@ if(demand == 'demand') {
                   width: 100.w,
                   decoration: BoxDecoration(
                       color:  Colors.greenAccent.shade400,
-                      borderRadius: BorderRadius.circular(6)),
+                      borderRadius: BorderRadius.circular(10)),
                   child: const Center(
                       child: Icon(Icons.check_circle_outline,color: Colors.white,size: 30,)
                   ),
@@ -374,11 +374,11 @@ if(demand == 'demand') {
                 /// for notification
              _firestore.collection('attendees').doc().set(
                     {
-                      'attendees': DateFormat('hh:mm')
+                      'attendees': DateFormat('hh:mm:a')
                         .format(DateTime.fromMicrosecondsSinceEpoch(DateTime.now().microsecondsSinceEpoch)),
                       'adminId': Uidadmin,
                       'fId':fId,
-                      'name':'$names $secondName'
+                      'name':'$names'
                     });
 
 
@@ -391,7 +391,7 @@ if(demand == 'demand') {
                     width: 100.w,
                     decoration: BoxDecoration(
                         color: const Color(0xffFD7F23),
-                        borderRadius: BorderRadius.circular(6)),
+                        borderRadius: BorderRadius.circular(10)),
                     child: Center(
                       child: Text(
                     'Mark Attendees',
@@ -436,10 +436,10 @@ if(demand == 'demand') {
               onTap: (){
               widget.index==1?  _firestore.collection('join').doc().set(
                     {
-                      'attendees': DateFormat('hh:mm')
+                      'attendees': DateFormat('hh:mm:a')
                           .format(DateTime.fromMicrosecondsSinceEpoch(DateTime.now().microsecondsSinceEpoch)),
                       'id': id,
-                      'name':'$names $secondName'
+                      'name':'$names'
                     }): null
 
                 ;
@@ -452,7 +452,7 @@ if(demand == 'demand') {
                   width: 100.w,
                   decoration: BoxDecoration(
                       color: const Color(0xff3B6EE9),
-                      borderRadius: BorderRadius.circular(6)),
+                      borderRadius: BorderRadius.circular(10)),
                   child: Center(
                       child: Text(
                         'Join Class',
@@ -472,7 +472,7 @@ if(demand == 'demand') {
                 width: 100.w,
                 decoration: BoxDecoration(
                     color:  Colors.grey,
-                    borderRadius: BorderRadius.circular(6)),
+                    borderRadius: BorderRadius.circular(10)),
                 child: Center(
                     child: Text(
                       'Join Class',
@@ -507,7 +507,7 @@ if(demand == 'demand') {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor:Colors.white,
+          backgroundColor:Colors.transparent,
           elevation: 0,
           automaticallyImplyLeading: false,
           iconTheme: const IconThemeData(color: Colors.black),

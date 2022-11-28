@@ -759,7 +759,7 @@ else{
                             ),
                             children: [
                               TextSpan(
-                                text:chatMap['senderType']=='admin' ? "(Mod)": "(${chatMap['senderType']})",
+                                text:chatMap['senderType']=='admin' ? "(Mod)": chatMap['senderType']=='faculty'?"(Faculty)":"(Student)",
                                 style: GoogleFonts.poppins(
                                   textStyle: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -932,12 +932,12 @@ else{
                               ),
                               children: [
                                 TextSpan(
-                                  text:chatMap['senderType']=='admin' ? "(Mod)": "(${chatMap['senderType']})",
+                                  text:chatMap['senderType']=='admin' ? "(Mod)": chatMap['senderType']=='faculty'?"(Faculty)":"(Student)",
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 11,
-                                        color:chatMap['senderType']=='admin' ? Colors.red.shade900:chatMap['senderType']=='faculty' ?Colors.yellow:Colors.blue.shade800),
+                                        color:chatMap['senderType']=='admin' ? Colors.red.shade800:chatMap['senderType']=='faculty' ?Colors.yellow.shade900:Colors.blue.shade800),
                                   ),
                                 )
                               ]),

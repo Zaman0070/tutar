@@ -96,110 +96,113 @@ class _AdminTaskState extends State<AdminTask> {
                           color: Colors.white,
                         ));
                   }
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemCount: snapshot.data!.size,
-                      itemBuilder:
-                          (BuildContext context, int index) {
-                        var data = snapshot.data!.docs[index];
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 3.h, vertical: 1.h),
-                          child: Container(
-                            height: 10.h,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.circular(20),
-                                color: const Color(0xffD7DDEC)
-                                    .withOpacity(0.4)),
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.symmetric(
-                                  horizontal: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment
-                                    .spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 2.h,
-                                      ),
-                                      CachedNetworkImage(
-                                        imageBuilder: (context,imageProvider)=>CircleAvatar(
-                                          radius: 25,
-                                          backgroundImage: imageProvider,
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemCount: snapshot.data!.size,
+                        itemBuilder:
+                            (BuildContext context, int index) {
+                          var data = snapshot.data!.docs[index];
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 3.h, vertical: 1.h),
+                            child: Container(
+                              height: 10.h,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(20),
+                                  color: const Color(0xffD7DDEC)
+                                      .withOpacity(0.4)),
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.symmetric(
+                                    horizontal: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 2.h,
                                         ),
-                                        cacheManager: CacheManager(Config(
-                                            'customCacheKey',
-                                            stalePeriod: const Duration(days: 500)
-
-                                        )),
-                                        imageUrl: data['url'],
-
-                                      ),
-                                      SizedBox(
-                                        width: 3.h,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment
-                                            .start,
-                                        children: [
-                                          SizedBox(
-                                            height: 3.5.h,
+                                        CachedNetworkImage(
+                                          imageBuilder: (context,imageProvider)=>CircleAvatar(
+                                            radius: 25,
+                                            backgroundImage: imageProvider,
                                           ),
-                                          Text(
-                                            "${data['name']} ${data['secondName']}",
-                                            style: GoogleFonts
-                                                .lato(
-                                              textStyle: TextStyle(
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .w700,
-                                                  fontSize:
-                                                  14.sp,
-                                                  color: const Color(
-                                                      0xff305F72)),
+                                          cacheManager: CacheManager(Config(
+                                              'customCacheKey',
+                                              stalePeriod: const Duration(days: 500)
+
+                                          )),
+                                          imageUrl: data['url'],
+
+                                        ),
+                                        SizedBox(
+                                          width: 3.h,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .start,
+                                          children: [
+                                            SizedBox(
+                                              height: 3.5.h,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 0.4.h,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  CircleAvatar(
-                                      radius: 3.h,
-                                      backgroundColor:
-                                      const Color(
-                                          0xff3B6EE9),
-                                      child: IconButton(
-                                          onPressed: () {
-                                            userProvider
-                                                .getStudentDetails(
-                                                data);
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (_) =>
-                                                    const StudentTask()));
+                                            Text(
+                                              "${data['name']} ${data['secondName']}",
+                                              style: GoogleFonts
+                                                  .lato(
+                                                textStyle: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight
+                                                        .w700,
+                                                    fontSize:
+                                                    14.sp,
+                                                    color: const Color(
+                                                        0xff305F72)),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 0.4.h,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    CircleAvatar(
+                                        radius: 3.h,
+                                        backgroundColor:
+                                        const Color(
+                                            0xff3B6EE9),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              userProvider
+                                                  .getStudentDetails(
+                                                  data);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                      const StudentTask()));
 //
-                                          },
-                                          icon: const Icon(
-                                            CupertinoIcons
-                                                .arrow_right_circle,
-                                            color: Colors.white,
-                                          )))
-                                ],
+                                            },
+                                            icon: const Icon(
+                                              CupertinoIcons
+                                                  .arrow_right_circle,
+                                              color: Colors.white,
+                                            )))
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      });
+                          );
+                        }),
+                  );
                 }),
           ),
 

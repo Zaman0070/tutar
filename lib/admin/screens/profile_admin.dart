@@ -132,7 +132,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                 bottom:-14,
                                 right:-12,
 
-                                child: IconButton(icon:const  Icon(Icons.add_a_photo_rounded,color: Colors.cyan,),onPressed: (){
+                                child: IconButton(icon:  Icon(Icons.add_a_photo_rounded,color: Colors.white.withOpacity(0.85),),onPressed: (){
                                   bottomSheet();
                                 },),
                               ),

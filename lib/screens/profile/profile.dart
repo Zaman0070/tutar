@@ -217,7 +217,7 @@ class _ProfileState extends State<Profile> {
                                          style: GoogleFonts.poppins(
                                            textStyle: TextStyle(
                                                fontWeight: FontWeight.w800,
-                                               fontSize: 17.sp,
+                                               fontSize: 16.sp,
                                                color: Colors.white),
                                          ),
                                        ),
@@ -328,7 +328,7 @@ class _ProfileState extends State<Profile> {
                                          style: GoogleFonts.poppins(
                                            textStyle: TextStyle(
                                                fontWeight: FontWeight.w800,
-                                               fontSize: 17.sp,
+                                               fontSize: 16.sp,
                                                color: Colors.white),
                                          ),
                                        ),

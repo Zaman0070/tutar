@@ -80,7 +80,9 @@ class _StudentTaskState extends State<StudentTask> {
               color: Colors.black),
         )),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xff3B6EE9),
+        onPressed: () {
         showDialog(
             context: context,
             builder: (ctxt) =>   AlertDialog(
@@ -207,7 +209,7 @@ class _StudentTaskState extends State<StudentTask> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(height: 2.h,),
-                                          Text( 'Prepare task',
+                                          Text( 'Task Assigned',
                                             overflow: TextOverflow.ellipsis,
                                             style: GoogleFonts.lato(
                                               textStyle: TextStyle(
@@ -221,7 +223,7 @@ class _StudentTaskState extends State<StudentTask> {
                                           SizedBox(height: 0.4.h,),
                                           Container(
                                             width: 60.w,
-                                            child: Text( taskData['task'],
+                                            child: Text(" ${taskData['task']}",
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 2,
                                                 style: TextStyle(color: Colors.red,fontSize: 11.5.sp,fontWeight: FontWeight.w300),),

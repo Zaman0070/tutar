@@ -174,12 +174,12 @@ exports.studentAttendeesAdmin = functions.firestore.document('attendees/{attende
 
         const payload = {
             notification: {
-          title: `${data.name} entered the session at ${message}. ✅`,
-          body:  'Tap to join.',
+          title: 'Talking2Allah',
+          body:  `${data.name} entered the session at ${message}. ✅`,
       },
       data: {
-       title: `${data.name} entered the session at ${message}. ✅`,
-       body:  'Tap to join.',
+        title: 'Talking2Allah',
+        body:  `${data.name} entered the session at ${message}. ✅`,
       }
   };
   admin.messaging().sendToDevice(tokenList, payload).then((response) =>{
@@ -220,12 +220,12 @@ exports.studentAttendeesFaculty = functions.firestore.document('attendees/{atten
 
         const payload = {
             notification: {
-          title: `${data.name} just joined the session. ✅`,
-          body:  'Tap to Join.',
+          title: 'Talking2Allah',
+          body:  `${data.name} just joined the session. ✅`,
       },
       data: {
-        title: `${data.name} just joined the session. ✅`,
-        body:  'Tap to Join.',
+        title: 'Talking2Allah',
+        body:  `${data.name} just joined the session. ✅`,
       }
   };
   admin.messaging().sendToDevice(tokenList, payload).then((response) =>{
@@ -265,12 +265,12 @@ exports.joinSession = functions.firestore.document('join/{joinId}').onCreate(
 
         const payload = {
             notification: {
-          title:  `The instructor just joined the session. ✅`,
-          body:  'Tap to join.',
+          title:  'Talking2Allah',
+          body:  `The instructor just joined the session. ✅`,
       },
       data: {
-        title:  `The instructor just joined the session. ✅`,
-        body:  'Tap to join.',
+       title:  'Talking2Allah',
+       body:  `The instructor just joined the session. ✅`,
       }
   };
   admin.messaging().sendToDevice(tokenList, payload).then((response) =>{
@@ -311,12 +311,12 @@ exports.pushNotificationTasks = functions.firestore.document('task/{taskId}/task
 
         const payload = {
             notification: {
-          title: 'New Task Assigned 📝',
-          body:  message,
+          title: 'Talking2Allah',
+          body:  'New Task Assigned. 📝',
       },
       data: {
-         title: 'New Task Assigned 📝',
-         body:  message,
+         title: 'Talking2Allah',
+         body:  'New Task Assigned. 📝',
       }
   };
   admin.messaging().sendToDevice(tokenList, payload).then((response) =>{

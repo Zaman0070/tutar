@@ -171,7 +171,7 @@ class FirebaseServices{
           'date':[],
           'schedule':[
           ],
-          'type':'Student',
+          'type':'student',
         }).then((value) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content:
@@ -276,7 +276,7 @@ class FirebaseServices{
           'date':[],
           'students':[],
           'url':url,
-          'type':'Faculty',
+          'type':'faculty',
         }).then((value) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content:

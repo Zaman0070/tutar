@@ -250,6 +250,7 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
               },
             ),
       floatingActionButton: widget.index==3?FloatingActionButton(
+        backgroundColor: Color(0xff3B6EE9),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => const AddMembersInGroup(),

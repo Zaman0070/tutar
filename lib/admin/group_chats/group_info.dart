@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:tutor_app/admin/admin_main.dart';
 
 import 'add_members.dart';
@@ -148,6 +149,7 @@ class _GroupInfoState extends State<GroupInfo> {
                     SizedBox(
                       height: size.height / 8,
                       width: size.width / 1.1,
+
                       child: Row(
                         children: [
                           Container(
@@ -182,28 +184,46 @@ class _GroupInfoState extends State<GroupInfo> {
                     //
 
                     SizedBox(
-                      height: size.height / 20,
+                      height: size.height / 35,
                     ),
 
                     Container(
-                      width: size.width / 1.1,
-                      child: Text(
-                        "${membersList.length} Members",
-                        style: TextStyle(
-                          fontSize: size.width / 20,
-                          fontWeight: FontWeight.w500,
+                      height: 80.h,
+                      width: 100.w,
+                      decoration:  BoxDecoration(
+                        color: Color(0xfff5f5f5),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(3, 3),
+                            blurRadius: 6,
+                            spreadRadius: 5,
+                            color: Colors.grey.shade300
+                          )
+                        ]
                       ),
-                    ),
-
-                    SizedBox(
-                      height: size.height / 20,
-                    ),
-
-                    // Members Name
-
-                    checkAdmin()
-                        ? ListTile(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: size.height/15,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                            child: Text(
+                              "${membersList.length} Members",
+                              style: TextStyle(
+                                fontSize: size.width / 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height / 20,
+                          ),
+                          checkAdmin()
+                              ? ListTile(
                             onTap: () => Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) => AddMembersINGroup(
@@ -214,7 +234,7 @@ class _GroupInfoState extends State<GroupInfo> {
                                 ),
                               ),
                             ),
-                            leading: Icon(
+                            leading: const Icon(
                               Icons.add,
                             ),
                             title: Text(
@@ -225,47 +245,55 @@ class _GroupInfoState extends State<GroupInfo> {
                               ),
                             ),
                           )
-                        : SizedBox(),
+                              : SizedBox(),
 
-                    Flexible(
-                      child: ListView.builder(
-                        itemCount: membersList.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            onTap: () => showDialogBox(index),
-                            leading: Icon(Icons.account_circle),
+                          Flexible(
+                            child: ListView.builder(
+                              itemCount: membersList.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  onTap: () => showDialogBox(index),
+                                  leading: Icon(Icons.account_circle),
+                                  title: Text(
+                                    membersList[index]['name'],
+                                    style: TextStyle(
+                                      fontSize: size.width / 22,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  subtitle: Text(membersList[index]['email']),
+                                  trailing: Text(
+                                      membersList[index]['isAdmin'] ? "Admin" : ""),
+                                );
+                              },
+                            ),
+                          ),
+
+                          ListTile(
+                            onTap: onLeaveGroup,
+                            leading: Icon(
+                              Icons.logout,
+                              color: Colors.redAccent,
+                            ),
                             title: Text(
-                              membersList[index]['name'],
+                              "Leave Group",
                               style: TextStyle(
                                 fontSize: size.width / 22,
                                 fontWeight: FontWeight.w500,
+                                color: Colors.redAccent,
                               ),
                             ),
-                            subtitle: Text(membersList[index]['email']),
-                            trailing: Text(
-                                membersList[index]['isAdmin'] ? "Admin" : ""),
-                          );
-                        },
+                          ),
+                        ],
                       ),
                     ),
 
-                    ListTile(
-                      onTap: onLeaveGroup,
-                      leading: Icon(
-                        Icons.logout,
-                        color: Colors.redAccent,
-                      ),
-                      title: Text(
-                        "Leave Group",
-                        style: TextStyle(
-                          fontSize: size.width / 22,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                    ),
+
+                    // Members Name
+
+
                   ],
                 ),
               ),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,8 +12,18 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tutor_app/Provider/user_provider.dart';
 import 'package:tutor_app/screens/splash_screen/splash_screen.dart';
-import 'package:tutor_app/services/local_notification_service.dart';
 
+
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey(
+    debugLabel: "Main Navigator");
+
+Future<void> selectNotification(String? payload) async {
+  if (payload != null) {
+    debugPrint('notification payload: $payload');
+    navigatorKey.currentState?.pushNamed('/second');
+  }
+}
 
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -30,30 +42,40 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//  RemoteNotification? notification = message.notification;
- // AndroidNotification? android = message.notification?.android;
+  RemoteNotification? notification = message.notification;
+  AndroidNotification? android = message.notification?.android;
   await Firebase.initializeApp();
-  // var initialzationSettingsAndroid =
-  // const AndroidInitializationSettings('@mipmap/ic_launcher');
-  // var initializationSettings =
-  // InitializationSettings(android: initialzationSettingsAndroid);
-  // AndroidNotification? android = message.notification?.android;
-  // RemoteNotification? notification = message.notification;
-  //
-  // flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  // flutterLocalNotificationsPlugin.show(message.data.hashCode,
-  //     message.data['title'],
-  //     message.data['body'],
-  //     NotificationDetails(
-  //       android: AndroidNotificationDetails(
-  //         channel.id,
-  //         channel.name,
-  //         //  channel.description,
-  //         icon: android!.smallIcon,
-  //       ),
-  //     )
-  // );
+  if (notification != null && android != null) {
+    // print('Message also contained a notification: ${message.notification}');
+    flutterLocalNotificationsPlugin.show(
+        message.data.hashCode,
+        message.data['title'],
+        message.data['body'],
+         NotificationDetails(
+          android: AndroidNotificationDetails(
+            'FLUTTER_NOTIFICATION_CLICK', //channel.id,
+            'FLUTTER_NOTIFICATION_CLICK_CHANNEL', //channel.name,
+            icon: android.smallIcon,
+           showProgress: true,
+           visibility: NotificationVisibility.public,
+           importance: Importance.max,
+           // color: primaryColor,
+            // other properties...
+          ),
+           iOS: const DarwinNotificationDetails(
+             presentBadge: true,
+             presentAlert: true,
+             presentSound: true,
+           )
+        ),
+        payload: json.encode(message.data)
+
+    );
+ }
 }
+String? payload;
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,9 +83,33 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
   ?.createNotificationChannel(channel);
- SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-   statusBarColor: Colors.white
- ));
+  SystemChrome.setSystemUIOverlayStyle( const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent
+  ));
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+      AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  // initialize notification for android
+  var initialzationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+  var initializationSettings =
+  InitializationSettings(android: initialzationSettingsAndroid);
+  flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,);
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+    print(message.notification!.body != null);
+    if (message.notification!.body != null) {
+      navigatorKey.currentState?.pushNamed('/second');
+    }
+  });
+
   runApp(const MyApp());
 }
 
@@ -75,6 +121,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+
+
+
   String? token;
   List subscribed = [];
   List topics = [
@@ -95,42 +145,30 @@ class _MyAppState extends State<MyApp> {
     InitializationSettings(android: initialzationSettingsAndroid);
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-              //  channel.description,
-                icon: android.smallIcon,
-              ),
-            ));
-      }
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                //  channel.description,
-                icon: android.smallIcon,
-              ),
-            ));
-      }
-    });
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   RemoteNotification? notification = message.notification;
+    //   AndroidNotification? android = message.notification?.android;
+    //   if (notification != null && android != null) {
+    //     flutterLocalNotificationsPlugin.show(
+    //         notification.hashCode,
+    //         notification.title,
+    //         notification.body,
+    //         NotificationDetails(
+    //           android: AndroidNotificationDetails(
+    //             channel.id,
+    //             channel.name,
+    //           //  channel.description,
+    //             icon: android.smallIcon,
+    //           ),
+    //             iOS: const DarwinNotificationDetails(
+    //               presentSound: true,
+    //               presentAlert: true,
+    //               presentBadge: true,
+    //
+    //             )
+    //         ));
+    //   }
+    // });
 
     getToken();
     getTopics();
@@ -172,7 +210,7 @@ class _MyAppState extends State<MyApp> {
                     DeviceType deviceType) =>
                 MaterialApp(
                   debugShowCheckedModeBanner: false,
-                  title: 'Flutter Demo',
+                  title: 'Talking2Allah LMS',
                   theme: ThemeData(
                     primarySwatch: Colors.blue,
                   ),
