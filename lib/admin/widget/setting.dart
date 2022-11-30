@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -152,6 +153,7 @@ class _SettingState extends State<Setting> {
                       height: 7.h,
                       width: 65.w,
                       child:  TextFormField(
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         keyboardType: TextInputType.number,
                         validator: (value){
                           if(value == null || value.isEmpty){
@@ -179,7 +181,7 @@ class _SettingState extends State<Setting> {
                     InkWell(
                       onTap: (){
                         data.reference.update({
-                          'completeClasses':completeClassesController.text
+                          'completeClasses':int.parse(completeClassesController.text)
                         });
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>const AdminMainScreen()), (route) => false);
 

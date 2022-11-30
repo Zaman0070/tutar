@@ -30,11 +30,7 @@ class CalendarScreen extends StatefulWidget {
 }
 
 class _CalendarScreenState extends State<CalendarScreen> {
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
   CalendarFormat weekFormat = CalendarFormat.twoWeeks;
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
   DateTime? selectedDate;
 
   @override
@@ -45,47 +41,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
     super.initState();
   }
 
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseServices services = FirebaseServices();
 
-  DateTime? _rangeStart;
-  DateTime? _rangeEnd;
 
   final _calendarControllerToday = AdvancedCalendarController.today();
-  final _calendarControllerCustom =
-      AdvancedCalendarController.custom(DateTime(2022, 10, 23));
 
   @override
   Widget build(BuildContext context) {
-    // return CalendarAppBar(
-    //   selectedDate: DateTime.now(),
-    //   accent: const Color(0xff3B6EE9),
-    //   backButton: false,
-    //   fullCalendar: true,
-    //   firstDate: widget.rangeStart,
-    //   onDateChanged: (value) => setState(() => selectedDate = value),
-    //   lastDate:  DateTime.now(),
-    // events: List.generate(
-    //   widget.rangeEnd!.length
-    // , (index) =>DateTime.fromMicrosecondsSinceEpoch(
-    //     widget.rangeEnd![index].microsecondsSinceEpoch)),
-    // );
-    // return SfCalendar(
-    //   showNavigationArrow: true,
-    //   viewHeaderStyle: const ViewHeaderStyle(
-    //     dayTextStyle: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold)
-    //   ),
-    //   headerHeight: 50,
-    //   headerStyle: CalendarHeaderStyle(textAlign:TextAlign.center,textStyle: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 18.sp)) ,
-    //   blackoutDatesTextStyle: const TextStyle(color: Colors.green,fontWeight: FontWeight.bold),
-    //   blackoutDates: List.generate(widget.rangeEnd!.length, (index) => DateTime.fromMicrosecondsSinceEpoch(
-    //     widget.rangeEnd![index].microsecondsSinceEpoch
-    //   )),
-    //   view: CalendarView.month,
-    //   monthViewSettings: const MonthViewSettings(showAgenda: false),
-    // );
     final List<DateTime> events = List.generate(
         widget.rangeEnd!.length,
         (index) => DateTime.fromMicrosecondsSinceEpoch(

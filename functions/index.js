@@ -199,6 +199,50 @@ exports.studentAttendeesAdmin = functions.firestore.document('attendees/{attende
     }
 );
 
+exports.facultyAttendeesAdmin = functions.firestore.document('attendance/{attendanceId}').onCreate(
+   async (snapshot, context) => {
+        const message = snapshot.data().attendees;
+        const data = snapshot.data();
+
+        const query =  await database
+                  .collection("users")
+                  .doc(data.adminId)
+                  .collection("tokens");
+
+        var tokenList = [];
+        //const tokens = query.docs.map((snap) => snap.id);
+       const token =await query.get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(token) {
+            tokenList.push(token.data()['token']);
+        });
+    });
+
+        const payload = {
+            notification: {
+          title: 'Talking2Allah',
+          body:  `${data.name} entered ${data.sn} the session at ${message}. ✅`,
+      },
+      data: {
+        title: 'Talking2Allah',
+        body:  `${data.name} entered ${data.sn} the session at ${message}. ✅`,
+      }
+  };
+  admin.messaging().sendToDevice(tokenList, payload).then((response) =>{
+    database.collection('notifications').doc().set({
+      title:  'Attendees',
+      body:  `${data.name} Marked ${message}`,
+      receiverId : data.adminId,
+
+    })
+
+
+    console.log('Successfully sent message:', response);
+     print('success');
+  }).catch((error)=>{
+    return console.log(error);
+  });
+    }
+);
 
 exports.studentAttendeesFaculty = functions.firestore.document('attendees/{attendeesId}').onCreate(
    async (snapshot, context) => {
@@ -353,7 +397,6 @@ exports.custom = functions.firestore.document('customNotification/{customNotific
             tokenList.push(token.data()['token']);
         });
     });
-
         const payload = {
             notification: {
           title: data.title,

@@ -51,6 +51,7 @@ class _HomeState extends State<Home> {
       selectedDate = DateTime.now();
     });
     super.initState();
+
     getUser();
     feedBack();
     adminUid();
@@ -372,14 +373,24 @@ if(demand == 'demand') {
 
 
                 /// for notification
-             _firestore.collection('attendees').doc().set(
+            widget.index==0
+                ? _firestore.collection('attendees').doc().set(
                     {
                       'attendees': DateFormat('hh:mm:a')
                         .format(DateTime.fromMicrosecondsSinceEpoch(DateTime.now().microsecondsSinceEpoch)),
                       'adminId': Uidadmin,
                       'fId':fId,
                       'name':'$names'
-                    });
+                    })
+                :
+            _firestore.collection('attendance').doc().set(
+                {
+                  'attendees': DateFormat('hh:mm:a')
+                      .format(DateTime.fromMicrosecondsSinceEpoch(DateTime.now().microsecondsSinceEpoch)),
+                  'adminId': Uidadmin,
+                  'sn':"$name's",
+                  'name':'${names}'
+                });
 
 
                 Navigator.pop(context);
@@ -507,7 +518,7 @@ if(demand == 'demand') {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor:Colors.transparent,
+          backgroundColor:Colors.white,
           elevation: 0,
           automaticallyImplyLeading: false,
           iconTheme: const IconThemeData(color: Colors.black),
@@ -646,7 +657,7 @@ if(demand == 'demand') {
                   ?  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: FutureBuilder<QuerySnapshot>(
-                    future: services.announcement.where('uid',isEqualTo: services.user!.uid).get(),
+                    future: services.announcement.where('id',isEqualTo: services.user!.uid).get(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.data == null) {
@@ -883,7 +894,7 @@ if(demand == 'demand') {
                   ?   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: FutureBuilder<QuerySnapshot>(
-                    future: services.announcement.where('uid',isEqualTo: services.user!.uid).get(),
+                    future: services.announcement.where('id',isEqualTo: services.user!.uid).get(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.data == null) {

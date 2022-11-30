@@ -51,10 +51,7 @@ class _GroupChatRoomState extends State<GroupChatRoom> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseServices services = FirebaseServices();
 
-
-
-
-
+  ScrollController _controller = ScrollController();
   File? file;
   var name;
   bool isLoading = false;
@@ -439,23 +436,9 @@ else{
 
   @override
   Widget build(BuildContext context) {
-
-
-    final ScrollController _controller = ScrollController(initialScrollOffset: widget.docs*150);
-
-    void _scrollDown() {
-      _controller.animateTo(
-        _controller.position.maxScrollExtent,
-        duration: const Duration(seconds:1 ),
-        curve: Curves.fastOutSlowIn,
-      );
-    }
-
-
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-    //  floatingActionButton:_controller.position.pixels==2 ? FloatingActionButton(onPressed: () {  },):Container(),
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
@@ -521,12 +504,12 @@ else{
               icon: const Icon(Icons.more_vert)),
         ],
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width:  MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            SizedBox(
-              height: size.height / 1.30,
-              width: size.width,
+            Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: _firestore
                     .collection('groups')
@@ -537,13 +520,20 @@ else{
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
-                      physics: const ScrollPhysics(),
+                      reverse:  true,
+                      scrollDirection: Axis.vertical,
+                      physics: const BouncingScrollPhysics(),
                       controller: _controller,
                       itemCount: snapshot.data!.docs.length  ,
                       itemBuilder: (context, index) {
+                        // if (index == snapshot.data!.docs.length) {
+                        //   return Container(
+                        //     height: 70,
+                        //   );
+                        // }
 
                         Map<String, dynamic> chatMap =
-                            snapshot.data!.docs[index].data()
+                            snapshot.data!.docs[snapshot.data!.docs.length - 1 -index].data()
                                 as Map<String, dynamic>;
 
                         return InkWell(
@@ -587,7 +577,7 @@ else{
                                                 ElevatedButton(
                                                   onPressed: () {
                                                     setState(() {
-                                                      snapshot.data!.docs[index]
+                                                      snapshot.data!.docs[snapshot.data!.docs.length - 1 -index]
                                                           .reference
                                                           .delete();
                                                     });
@@ -613,11 +603,11 @@ else{
               ),
             ),
             Container(
-              height: size.height / 14,
+              height: size.height / 10,
               width: size.width,
               alignment: Alignment.bottomCenter,
               child: SizedBox(
-                height: size.height / 14,
+                height: size.height / 10,
                 width: size.width / 1.1,
 
                 child: Row(
@@ -631,7 +621,9 @@ else{
                       height: size.height / 17,
                       width: size.width / 1.3,
                       child: TextFormField(
-                        onTap: _scrollDown,
+                        onTap: (){
+                          _controller.jumpTo(0);
+                        },
                         controller: _message,
                         decoration: InputDecoration(
                             contentPadding:  const EdgeInsets.symmetric(
@@ -639,7 +631,7 @@ else{
                             suffixIcon: IconButton(
                               onPressed: (){
                                 onSendMessage();
-                                _controller.jumpTo(_controller.position.maxScrollExtent.w);
+                                _controller.jumpTo(0);
                               },
                               icon: Image.asset(
                                 'assets/img.png',
@@ -826,6 +818,7 @@ else{
             ],
           ),
         );
+
       } else if (chatMap['type'] == "img") {
         return InkWell(
           onTap: () => Navigator.of(context).push(
@@ -942,12 +935,6 @@ else{
                                 )
                               ]),
                         )
-                        //     ? Text(chatMap['senderType']=='admin'?
-                        //         "${chatMap['sendBy']}(𝗠𝗼𝗱)":
-                        // "${chatMap['sendBy']}${chatMap['secondName']}(${chatMap['senderType']})",
-                        //         style:
-                        //             const TextStyle(fontSize: 13, color: Colors.grey),
-                        //       )
                             : Column(),
                         ChatBubble(
                           alignment: chatMap['sendId'] == services.user!.uid
@@ -996,37 +983,6 @@ else{
               ],
             ),
           ),
-          // child: Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-          //   child: ChatBubble(
-          //     alignment: chatMap['sendId'] == services.user!.uid
-          //         ? Alignment.centerRight
-          //         : Alignment.centerLeft,
-          //     backGroundColor: chatMap['sendId'] == services.user!.uid
-          //         ? const Color(0xff1C80F9)
-          //         : Colors.white,
-          //     clipper: ChatBubbleClipper5(
-          //         type: chatMap['sendId'] == services.user!.uid
-          //             ? BubbleType.sendBubble
-          //             : BubbleType.receiverBubble),
-          //     child: chatMap['message'] != ""
-          //         ? Row(
-          //       mainAxisSize:MainAxisSize.min ,
-          //           children: [
-          //             Icon(Icons.file_copy_sharp,color: Colors.white,),
-          //             SizedBox(width: 1.w,),
-          //             Text(
-          //                 chatMap['name'],
-          //                 style: TextStyle(
-          //                     color: chatMap['sendId'] == services.user!.uid
-          //                         ? Colors.white
-          //                         : Colors.black),
-          //               ),
-          //           ],
-          //         )
-          //         : const CircularProgressIndicator(),
-          //   ),
-          // ),
         );
       } else if (chatMap['type'] == "notify") {
         return Container(

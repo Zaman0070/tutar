@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -13,17 +10,6 @@ import 'package:sizer/sizer.dart';
 import 'package:tutor_app/Provider/user_provider.dart';
 import 'package:tutor_app/screens/splash_screen/splash_screen.dart';
 
-
-
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey(
-    debugLabel: "Main Navigator");
-
-Future<void> selectNotification(String? payload) async {
-  if (payload != null) {
-    debugPrint('notification payload: $payload');
-    navigatorKey.currentState?.pushNamed('/second');
-  }
-}
 
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -42,21 +28,22 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  RemoteNotification? notification = message.notification;
+  print('Message also contained mmmmmmmmmmmmm: ${message}');
+//  RemoteNotification? notification = message.notification;
   AndroidNotification? android = message.notification?.android;
-  await Firebase.initializeApp();
-  if (notification != null && android != null) {
-    // print('Message also contained a notification: ${message.notification}');
+  //await Firebase.initializeApp();
+  if (message.notification != null ) {
+     print('Message also contained a notification: ${message.notification}');
     flutterLocalNotificationsPlugin.show(
-        message.data.hashCode,
-        message.data['title'],
-        message.data['body'],
+      0,
+      message.notification!.title,
+      message.notification!.body,
          NotificationDetails(
           android: AndroidNotificationDetails(
-            'FLUTTER_NOTIFICATION_CLICK', //channel.id,
-            'FLUTTER_NOTIFICATION_CLICK_CHANNEL', //channel.name,
-            icon: android.smallIcon,
-           showProgress: true,
+            channel.id, //channel.id,
+            channel.name, //channel.name,
+            icon: android!.smallIcon,
+            showProgress: true,
            visibility: NotificationVisibility.public,
            importance: Importance.max,
            // color: primaryColor,
@@ -68,7 +55,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
              presentSound: true,
            )
         ),
-        payload: json.encode(message.data)
+      //  payload: json.encode(message.data)
 
     );
  }
@@ -83,33 +70,11 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
   ?.createNotificationChannel(channel);
+
+  // FirebaseMessaging.instance.setForegroundNotificationPresentationOptions( alert: true, badge: true, sound: true, );
   SystemChrome.setSystemUIOverlayStyle( const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent
   ));
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-
-  // initialize notification for android
-  var initialzationSettingsAndroid =
-  AndroidInitializationSettings('@mipmap/ic_launcher');
-  var initializationSettings =
-  InitializationSettings(android: initialzationSettingsAndroid);
-  flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
-  final NotificationAppLaunchDetails? notificationAppLaunchDetails =
-  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,);
-
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-    print(message.notification!.body != null);
-    if (message.notification!.body != null) {
-      navigatorKey.currentState?.pushNamed('/second');
-    }
-  });
-
   runApp(const MyApp());
 }
 
@@ -121,30 +86,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-
-
-
   String? token;
-  List subscribed = [];
-  List topics = [
-    'Samsung',
-    'Apple',
-    'Huawei',
-    'Nokia',
-    'Sony',
-    'HTC',
-    'Lenovo'
-  ];
   @override
   void initState() {
     super.initState();
-    var initialzationSettingsAndroid =
-    const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettings =
-    InitializationSettings(android: initialzationSettingsAndroid);
 
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    // var initialzationSettingsAndroid =
+    // const AndroidInitializationSettings('@mipmap/ic_launcher');
+    // var initializationSettings =
+    // InitializationSettings(android: initialzationSettingsAndroid);
+    //
+    // flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+
     // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     //   RemoteNotification? notification = message.notification;
     //   AndroidNotification? android = message.notification?.android;
@@ -170,31 +125,15 @@ class _MyAppState extends State<MyApp> {
     //   }
     // });
 
-    getToken();
-    getTopics();
+  //  getToken();
   }
-  getToken() async {
-    token = await FirebaseMessaging.instance.getToken();
-    setState(() {
-      token = token;
-    });
-    print(token);
-  }
-
-  getTopics() async {
-    await FirebaseFirestore.instance
-        .collection('topics')
-        .get()
-        .then((value) => value.docs.forEach((element) {
-      if (token == element.id) {
-        subscribed = element.data().keys.toList();
-      }
-    }));
-
-    setState(() {
-      subscribed = subscribed;
-    });
-  }
+  // getToken() async {
+  //   token = await FirebaseMessaging.instance.getToken();
+  //   setState(() {
+  //     token = token;
+  //   });
+  //   print(token);
+  // }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

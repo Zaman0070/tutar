@@ -50,8 +50,8 @@ class _AttendeesListState extends State<AttendeesList> {
                 child: Row(
                   children: [
                     Container(
-                      height: 6.h,
-                      width: 6.h,
+                      height: 6.2.h,
+                      width: 6.2.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color:const Color(0xff3C67FF),
@@ -66,7 +66,7 @@ class _AttendeesListState extends State<AttendeesList> {
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                   fontWeight: FontWeight.w800,
-                                  fontSize: 17.sp,
+                                  fontSize: 16.sp,
                                   color: Colors.white),
                             ),
                           ),
@@ -98,27 +98,31 @@ class _AttendeesListState extends State<AttendeesList> {
                                 color: const Color(0xff343674)),
                           ),
                         ),
-                        RichText(
-                          text: TextSpan(
-                              text:"Joined Session At "
-                              ,
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12.sp,
-                                    color: Colors.grey[600]),
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: formattedTime1,
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12.sp,
-                                        color: Colors.grey[600]),
-                                  ),
-                                )
-                              ]),
+                        Container(
+                          width: 67.w,
+                          child: RichText(
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                                text:"Joined Session At "
+                                ,
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 12.sp,
+                                      color: Colors.grey[600]),
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: "$formattedTime1.",
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12.sp,
+                                          color: Colors.grey[600]),
+                                    ),
+                                  )
+                                ]),
+                          ),
                         )
                       ],
                     )

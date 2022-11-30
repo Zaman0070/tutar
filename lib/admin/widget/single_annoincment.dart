@@ -78,7 +78,8 @@ class _SingleSudentAnnounState extends State<SingleSudentAnnoun> {
           onPressed: (){
             services.announcement.doc(data!['uid']).set({
               "announcement" : announcmentController.text,
-              'uid': data['uid']
+              'uid': data['uid'],
+              'id': data['uid']
             });
             setState(() {
 
@@ -86,7 +87,48 @@ class _SingleSudentAnnounState extends State<SingleSudentAnnoun> {
           },
 
           child: const Text(
-            'Announcement',
+            'Send Notification',
+            style: TextStyle(
+              color: Colors.white,
+              letterSpacing: 1.5,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget _buildLoginBtn() {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(15.0),
+
+            backgroundColor: const Color(0xff376AED),
+            elevation: 5.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+
+          onPressed: (){
+            services.announcement.doc(data!['uid']).set({
+              "announcement" : announcmentController.text,
+             // 'uid': data['uid'],
+              'id': data['uid']
+
+            });
+            setState(() {
+
+            });
+          },
+
+          child: const Text(
+            'Just Announcement',
             style: TextStyle(
               color: Colors.white,
               letterSpacing: 1.5,
@@ -117,7 +159,7 @@ class _SingleSudentAnnounState extends State<SingleSudentAnnoun> {
     body:  Column(
         children: [
           FutureBuilder<QuerySnapshot>(
-              future: services.announcement.where('uid',isEqualTo: data['uid']).get(),
+              future: services.announcement.where('id',isEqualTo: data['uid']).get(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.data == null) {
@@ -262,6 +304,7 @@ class _SingleSudentAnnounState extends State<SingleSudentAnnoun> {
               children: [
                 _buildAnnouncementTF(),
                 _sbuildLoginBtn(),
+                _buildLoginBtn()
               ],
             ),
           ),

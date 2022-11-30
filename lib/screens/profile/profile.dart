@@ -201,8 +201,8 @@ class _ProfileState extends State<Profile> {
                              child: Row(
                                children: [
                                  Container(
-                                   height: 6.h,
-                                   width: 6.h,
+                                   height: 6.2.h,
+                                   width: 6.2.h,
                                    decoration: BoxDecoration(
                                      borderRadius: BorderRadius.circular(10),
                                      color:index == 0? const Color(0xff3C67FF):index == 1? const Color(0xffD66BAB).withOpacity(0.7): const Color(0xff7FD77D).withOpacity(0.7),
@@ -249,26 +249,30 @@ class _ProfileState extends State<Profile> {
                                              color: const Color(0xff343674)),
                                        ),
                                      ),
-                                     RichText(
-                                       text: TextSpan(
-                                           text: "Joined Session At ",
-                                           style: GoogleFonts.poppins(
-                                             textStyle: TextStyle(
-                                                 fontWeight: FontWeight.w300,
-                                                 fontSize: 12.sp,
-                                                 color: Colors.grey[600]),
-                                           ),
-                                           children: [
-                                             TextSpan(
-                                               text: formattedTime1,
-                                               style: GoogleFonts.poppins(
-                                                 textStyle: TextStyle(
-                                                     fontWeight: FontWeight.w600,
-                                                     fontSize: 12.sp,
-                                                     color: Colors.grey[600]),
-                                               ),
-                                             )
-                                           ]),
+                                     Container(
+                                       width: 67.w,
+                                       child: RichText(
+                                         overflow: TextOverflow.ellipsis,
+                                         text: TextSpan(
+                                             text: "Joined Session At ",
+                                             style: GoogleFonts.poppins(
+                                               textStyle: TextStyle(
+                                                   fontWeight: FontWeight.w300,
+                                                   fontSize: 12.sp,
+                                                   color: Colors.grey[600]),
+                                             ),
+                                             children: [
+                                               TextSpan(
+                                                 text: "$formattedTime1.",
+                                                 style: GoogleFonts.poppins(
+                                                   textStyle: TextStyle(
+                                                       fontWeight: FontWeight.w600,
+                                                       fontSize: 12.sp,
+                                                       color: Colors.grey[600]),
+                                                 ),
+                                               )
+                                             ]),
+                                       ),
                                      )
                                    ],
                                  )
@@ -312,8 +316,8 @@ class _ProfileState extends State<Profile> {
                              child: Row(
                                children: [
                                  Container(
-                                   height: 6.h,
-                                   width: 6.h,
+                                   height: 6.2.h,
+                                   width: 6.2.h,
                                    decoration: BoxDecoration(
                                      borderRadius: BorderRadius.circular(10),
                                      color:index == 0? const Color(0xff3C67FF):index == 1? const Color(0xffD66BAB).withOpacity(0.7): const Color(0xff7FD77D).withOpacity(0.7),
@@ -360,27 +364,31 @@ class _ProfileState extends State<Profile> {
                                              color: const Color(0xff343674)),
                                        ),
                                      ),
-                                     RichText(
-                                       text: TextSpan(
-                                           text:"Joined ${name.replaceAll('0', '').replaceAll('1', '').replaceAll('2', '').replaceAll('3', '').replaceAll('4', '').replaceAll('5', '').replaceAll('6', '')
-                                           .replaceAll('7', '').replaceAll('8', '').replaceAll('9', '').replaceAll('-', '')}'s Session At ",
-                                           style: GoogleFonts.poppins(
-                                             textStyle: TextStyle(
-                                                 fontWeight: FontWeight.w300,
-                                                 fontSize: 12.sp,
-                                                 color: Colors.grey[600]),
-                                           ),
-                                           children: [
-                                             TextSpan(
-                                               text: formattedTime1,
-                                               style: GoogleFonts.poppins(
-                                                 textStyle: TextStyle(
-                                                     fontWeight: FontWeight.w600,
-                                                     fontSize: 12.sp,
-                                                     color: Colors.grey[600]),
-                                               ),
-                                             )
-                                           ]),
+                                     Container(
+                                       width: 67.w,
+                                       child: RichText(
+                                         overflow: TextOverflow.ellipsis,
+                                         text: TextSpan(
+                                             text:"Joined ${name.replaceAll('0', '').replaceAll('1', '').replaceAll('2', '').replaceAll('3', '').replaceAll('4', '').replaceAll('5', '').replaceAll('6', '')
+                                             .replaceAll('7', '').replaceAll('8', '').replaceAll('9', '').replaceAll('-', '')}'s Session At ",
+                                             style: GoogleFonts.poppins(
+                                               textStyle: TextStyle(
+                                                   fontWeight: FontWeight.w300,
+                                                   fontSize: 12.sp,
+                                                   color: Colors.grey[600]),
+                                             ),
+                                             children: [
+                                               TextSpan(
+                                                 text: '$formattedTime1.',
+                                                 style: GoogleFonts.poppins(
+                                                   textStyle: TextStyle(
+                                                       fontWeight: FontWeight.w600,
+                                                       fontSize: 12.sp,
+                                                       color: Colors.grey[600]),
+                                                 ),
+                                               )
+                                             ]),
+                                       ),
                                      )
                                    ],
                                  )
