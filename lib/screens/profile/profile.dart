@@ -207,31 +207,34 @@ class _ProfileState extends State<Profile> {
                                      borderRadius: BorderRadius.circular(10),
                                      color:index == 0? const Color(0xff3C67FF):index == 1? const Color(0xffD66BAB).withOpacity(0.7): const Color(0xff7FD77D).withOpacity(0.7),
                                    ),
-                                   child: Row(
-                                     children: [
-                                       SizedBox(
-                                         width: 3.w,
+                                   child: FittedBox(
+                                     fit: BoxFit.contain,
+                                     child: Padding(
+                                       padding: const EdgeInsets.all(6.0),
+                                       child: Row(
+                                         children: [
+                                           Text(
+                                             day.day.toString(),
+                                             style: GoogleFonts.poppins(
+                                               textStyle: TextStyle(
+                                                   fontWeight: FontWeight.w800,
+                                                   fontSize: 16.sp,
+                                                   color: Colors.white),
+                                             ),
+                                           ),
+                                           const Padding(
+                                             padding: EdgeInsets.only(bottom: 10),
+                                             child: Text(
+                                               'th',
+                                               style: TextStyle(
+                                                   fontSize: 10,
+                                                   color: Colors.white,
+                                                   fontWeight: FontWeight.bold),
+                                             ),
+                                           )
+                                         ],
                                        ),
-                                       Text(
-                                         day.day.toString(),
-                                         style: GoogleFonts.poppins(
-                                           textStyle: TextStyle(
-                                               fontWeight: FontWeight.w800,
-                                               fontSize: 16.sp,
-                                               color: Colors.white),
-                                         ),
-                                       ),
-                                       const Padding(
-                                         padding: EdgeInsets.only(bottom: 10),
-                                         child: Text(
-                                           'th',
-                                           style: TextStyle(
-                                               fontSize: 10,
-                                               color: Colors.white,
-                                               fontWeight: FontWeight.bold),
-                                         ),
-                                       )
-                                     ],
+                                     ),
                                    ),
                                  ),
                                  SizedBox(
@@ -322,31 +325,34 @@ class _ProfileState extends State<Profile> {
                                      borderRadius: BorderRadius.circular(10),
                                      color:index == 0? const Color(0xff3C67FF):index == 1? const Color(0xffD66BAB).withOpacity(0.7): const Color(0xff7FD77D).withOpacity(0.7),
                                    ),
-                                   child: Row(
-                                     children: [
-                                       SizedBox(
-                                         width: 3.w,
+                                   child: FittedBox(
+                                     fit: BoxFit.contain,
+                                     child: Padding(
+                                       padding: const EdgeInsets.all(6.0),
+                                       child: Row(
+                                         children: [
+                                           Text(
+                                             day.day.toString(),
+                                             style: GoogleFonts.poppins(
+                                               textStyle: TextStyle(
+                                                   fontWeight: FontWeight.w800,
+                                                   fontSize: 16.sp,
+                                                   color: Colors.white),
+                                             ),
+                                           ),
+                                           const Padding(
+                                             padding: EdgeInsets.only(bottom: 10),
+                                             child: Text(
+                                               'th',
+                                               style: TextStyle(
+                                                   fontSize: 10,
+                                                   color: Colors.white,
+                                                   fontWeight: FontWeight.bold),
+                                             ),
+                                           )
+                                         ],
                                        ),
-                                       Text(
-                                         day.day.toString(),
-                                         style: GoogleFonts.poppins(
-                                           textStyle: TextStyle(
-                                               fontWeight: FontWeight.w800,
-                                               fontSize: 16.sp,
-                                               color: Colors.white),
-                                         ),
-                                       ),
-                                       const Padding(
-                                         padding: EdgeInsets.only(bottom: 10),
-                                         child: Text(
-                                           'th',
-                                           style: TextStyle(
-                                               fontSize: 10,
-                                               color: Colors.white,
-                                               fontWeight: FontWeight.bold),
-                                         ),
-                                       )
-                                     ],
+                                     ),
                                    ),
                                  ),
                                  SizedBox(

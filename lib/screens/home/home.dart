@@ -702,7 +702,6 @@ if(demand == 'demand') {
                                       ),
                                       Text(
                                         'Announcements',
-
                                         style: GoogleFonts.poppins(
                                           textStyle: TextStyle(
                                               fontWeight: FontWeight.w600,

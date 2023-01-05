@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tutor_app/screens/auth/sign_up.dart';
 import 'package:tutor_app/services/firbaseservice.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   final int? index;
@@ -27,9 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-
   bool isLoading = false;
   List<String>? faculty  =[];
   List<String>? student  =[];
@@ -43,7 +41,14 @@ class _LoginScreenState extends State<LoginScreen> {
     getAdmin();
 
   }
-
+  googleMeet() async {
+    var url = 'https://trial.talking2allah.com/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   Future getFaculty() async {
     await _firestore
         .collection('users').where('type',isEqualTo: 'faculty')
@@ -83,8 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {});
     });
   }
-
-
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,17 +219,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       Pin(size: 170.0, middle: 0.566),
                       child:Image.asset('assets/logo/logo1.png')
                     ),
-                    // Pinned.fromPins(
-                    //     Pin(size: 100, start: 150),
-                    //     Pin(size: 55.0, middle: 0.64),
-                    //     child: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children: [
-                    //         Text('Educator',style: TextStyle(fontSize: 14.sp,color: const Color(0xff3B6EE9)),),
-                    //         Text("Qur'an learning",style: TextStyle(fontSize: 12.sp,fontWeight: FontWeight.w300),),
-                    //       ],
-                    //     )
-                    // ),
                     Pinned.fromPins(
                       Pin(size: 28.0, end: 65.0),
                       Pin(size: 28.0, middle: 0.18),
@@ -256,7 +248,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-
                     Pinned.fromPins(
                       Pin(size: 12.0, middle: 0.75),
                       Pin(size: 12.0, start: 120.0),
@@ -291,7 +282,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 1.h,),
               Container(
-                height: 72.h,
+                height: 70.h,
                 width: 100.w,
                 decoration: const BoxDecoration(
                     color:  Color(0xff3B6EE9),
@@ -336,15 +327,25 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 3.h,
                             ),
                             _buildLoginBtn(),
-                            SizedBox(
-                              height: 6.h,
+                            SizedBox(height: 5.h,),
+                            Row(
+                              children: [
+                                Text('Note: ',style: TextStyle(fontWeight: FontWeight.w900),),
+                                Text(widget.index==0?'If you are not an enrolled student, ':"Contact the administrator for portal access.",),
+                                InkWell(
+                                    onTap: googleMeet,
+                                    child: Text(widget.index==0?'click here.':"",style: TextStyle(fontWeight: FontWeight.w900,color: Color(0xff343674)),)),
+                              ],
                             ),
-                            // InkWell(
-                            //   onTap: (){
-                            //     Navigator.push(context, MaterialPageRoute(builder: (_)=>SignUp()));
-                            //   },
-                            //   child: Text('data'),
-                            // )
+                              Padding(
+                              padding: EdgeInsets.only(right: 10.0),
+                              child: widget.index ==0?const Divider(
+                                color: Color(0xff343674),
+                                indent: 250,
+                                height: 5,
+                                thickness: 2,
+                              ):null,
+                            )
                           ],
                         ),
                       ),

@@ -232,9 +232,12 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
                                       ));
                                 }
                                 return Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(snapshot.data!['lastMsg'],style: TextStyle(fontWeight: snapshot.data!['read']==false && snapshot.data!['senderId'] !=services.user!.uid? FontWeight.bold:FontWeight.normal,),),
+                                    Container(
+                                        width:MediaQuery.of(context).size.width/1.5,
+                                        child: Text(snapshot.data!['lastMsg'],overflow:TextOverflow.ellipsis,
+                                      style: TextStyle(fontWeight: snapshot.data!['read']==false && snapshot.data!['senderId'] !=services.user!.uid? FontWeight.bold:FontWeight.normal,),)),
+
                                     snapshot.data!['read']==false&&snapshot.data!['senderId'] !=services.user!.uid? CircleAvatar(radius: 5,):Container(),
                                   ],
                                 );

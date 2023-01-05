@@ -51,7 +51,7 @@ dependencies:
   provider: ^6.0.4
   custom_date_range_picker: ^1.0.6
   modal_bottom_sheet: ^2.1.2
-  url_launcher: ^6.1.6
+  url_launcher: ^6.1.7
   uuid: ^3.0.6
   flutter_chat_bubble: ^2.0.0
   flutter_rating_bar: ^4.0.1
