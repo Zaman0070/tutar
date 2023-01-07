@@ -329,19 +329,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             _buildLoginBtn(),
                             SizedBox(height: 5.h,),
                             Row(
+
                               children: [
                                 Text('Note: ',style: TextStyle(fontWeight: FontWeight.w900),),
-                                Text(widget.index==0?'If you are not an enrolled student, ':"Contact the administrator for portal access.",),
+                                Text(widget.index==0?'If you are not an enrolled student, ':"Contact the administrator for portal access.",style: TextStyle(
+                                  fontSize: 10.sp
+                                ),),
                                 InkWell(
                                     onTap: googleMeet,
-                                    child: Text(widget.index==0?'click here.':"",style: TextStyle(fontWeight: FontWeight.w900,color: Color(0xff343674)),)),
+                                    child: Text(widget.index==0?'click here.':"",style: TextStyle(fontWeight: FontWeight.w900,color: Color(0xff343674),fontSize: 10),)),
                               ],
                             ),
                               Padding(
-                              padding: EdgeInsets.only(right: 10.0),
+                              padding: EdgeInsets.only(right: 25.0),
                               child: widget.index ==0?const Divider(
                                 color: Color(0xff343674),
-                                indent: 250,
+                                indent: 220,
                                 height: 5,
                                 thickness: 2,
                               ):null,
